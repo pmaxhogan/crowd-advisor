@@ -4,9 +4,16 @@ import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap"
 export default function NavbarComponent() {
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="xxl">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <img
+          src="/gatsby-web/src/images/logo.png"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          alt="Logo"
+        />
+        <Navbar.Brand href="#home">FinAnal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

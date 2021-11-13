@@ -1,6 +1,7 @@
 import * as React from "react";
 import NavbarComponent from "../components/navbar";
 import firebase from "gatsby-plugin-firebase";
+import { Col, Row, Container } from "react-bootstrap"
 
 // markup
 class IndexPage extends React.Component {
@@ -35,10 +36,20 @@ class IndexPage extends React.Component {
         return (
             <main>
                 <title>Home Page</title>
-                <NavbarComponent/>
+                <NavbarComponent />
+                <Container>
+                    <Row>
+                        <Col md={4}>
+                            Stocks
+                        </Col>
+                        <Col>
+                            Charts
+                        </Col>
+                    </Row>
+                </Container>
             </main>
         );
     }
 };
 
-export default IndexPage;
+export default IndexPage
