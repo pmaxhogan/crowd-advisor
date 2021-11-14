@@ -19,8 +19,6 @@ const daysAgoToDateRange = daysAgo => {
     startRange.setDate(startRange.getDate() - daysAgo);
     endRange.setDate(endRange.getDate() - (daysAgo - 1));
 
-    console.log(daysAgo, startRange, endRange);
-
     return [dateToTwitterDate(startRange), dateToTwitterDate(endRange)];
 };
 
@@ -31,8 +29,6 @@ const getSentimentForDay = (ticker, daysAgo) => new Promise((resolve, reject) =>
         if (error) {
             return reject(error);
         }else{
-            console.log(tweets.statuses);
-
             tweets.statuses.map(tweet => {
                 if(tweet.text) tweet.sentiment = sentiment.analyze(tweet.text);
                 return tweet;
@@ -45,8 +41,8 @@ const getSentimentForDay = (ticker, daysAgo) => new Promise((resolve, reject) =>
             const mostPopularTweet = tweets.statuses.sort((a, b) => b.favorite_count - a.favorite_count)[0];
 
             return resolve({
-                sentiment: overallSentimentTransformed,
-                mostPopularTweet: mostPopularTweet.id_str
+                sentiment: isNaN(overallSentimentTransformed) ? 0 : overallSentimentTransformed,
+                mostPopularTweet: mostPopularTweet ? mostPopularTweet.id_str : null
             });
         }
     });
@@ -59,7 +55,6 @@ const getSentimentAndTweetHistory = async ticker => {
         const date = new Date();
 
         date.setDate(date.getDate() - day);
-        console.log("day", day, date);
         const {sentiment, mostPopularTweet} = await getSentimentForDay(ticker, day);
 
         daySentiment.push({
