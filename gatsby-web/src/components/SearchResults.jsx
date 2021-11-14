@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 export default function SearchResults(props) {
     const { results, pickStock, goBack } = props;
 
-    const resultComponents = results.filter(result => !result.symbol.includes(".") && !result.symbol.includes("/")).map(result =>
+    const resultComponents = results && results.filter && results.filter(result => !result.symbol.includes(".") && !result.symbol.includes("/")).map(result =>
         <Button
             key={result.symbol}
             onClick={() => pickStock(result.symbol)}
@@ -19,7 +19,7 @@ export default function SearchResults(props) {
     return (
         <>
         <Button onClick={goBack} variant="outline-primary" size="sm" style={{display: "block", marginBottom: "10px"}}>Back</Button>
-        {resultComponents.length ? resultComponents : <>
+        {(resultComponents && resultComponents.length) ? resultComponents : <>
         No results found...
         </>}
         </>
