@@ -14,7 +14,7 @@ export default function Tweets(props) {
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column">
               {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet &&
-              <Tweet tweetId={tweet.mostPopularTweet}/>
+              <Tweet key={tweet.mostPopularTweet} tweetId={tweet.mostPopularTweet}/>
           )}
           </Masonry>
       </Col>

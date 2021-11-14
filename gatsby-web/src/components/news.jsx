@@ -14,7 +14,7 @@ export default function News(props) {
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column">
               {props.news && props.news.map(newsArticle => newsArticle &&
-                  <Card style={{ width: '18rem' }}>
+                  <Card key={newsArticle.id} style={{ width: '18rem' }}>
                       <Card.Img variant="top" src={newsArticle.image} />
                       <Card.Body>
                           <Card.Title>{newsArticle.headline}</Card.Title>

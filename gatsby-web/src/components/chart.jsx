@@ -79,6 +79,8 @@ const macdAppearance = {
 class CandlestickChart extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log("Chart constructor");
+
 		this.handleBrush1 = this.handleBrush1.bind(this);
 		this.handleBrush3 = this.handleBrush3.bind(this);
 		this.onKeyPress = this.onKeyPress.bind(this);
@@ -87,6 +89,8 @@ class CandlestickChart extends React.Component {
 		const { data: initialData } = props;
 
 		const calculatedData = macdCalculator(smaVolume50(ema12(ema26(initialData))));
+		console.log("calculated data ", calculatedData);
+
 		const xScaleProvider = discontinuousTimeScaleProvider
 			.inputDateAccessor(d => d.date);
 		const {
