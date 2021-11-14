@@ -9,7 +9,6 @@ export default function News(props) {
   return (
     <Row>
       <Col>
-          <h3>News</h3>
           <Masonry
               breakpointCols={3}
               className="my-masonry-grid"
