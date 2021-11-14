@@ -10,21 +10,21 @@ const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = process.env.FINNHUB_KEY;
 const finnhubClient = new finnhub.DefaultApi();
 
-function getCandleData (symbol, isStock) {
-    // data for past 7 days
-    const prevDate = Math.floor((Date.now() - (7 * 1000 * 3600 * 24)) / 1000);
-    const nowDate = Math.floor(Date.now() / 1000);
+// date window for data updates
+const prevDate = Date.now() - 7 * 1000 * 3600 * 24;
+const nowDate = Date.now();
 
+function getCandleData (symbol, isStock) {
     return new Promise((resolve, reject) => {
         if (isStock) {
-            finnhubClient.stockCandles(symbol, 'D', prevDate, nowDate, (error, data, response) => {
+            finnhubClient.stockCandles(symbol, 'D', Math.floor(prevDate / 1000), Math.floor(nowDate / 1000), (error, data, response) => {
                 if (error) {
                     return reject(error);
                 }
                 resolve(data);
             });
         } else {
-            finnhubClient.cryptoCandles(symbol, 'D', prevDate, nowDate, (error, data, response) => {
+            finnhubClient.cryptoCandles(symbol, 'D', Math.floor(prevDate / 1000), Math.floor(nowDate / 1000), (error, data, response) => {
                 if (error) {
                     return reject(error);
                 }
@@ -34,6 +34,7 @@ function getCandleData (symbol, isStock) {
     });
 }
 
+// get company/crypto name from symbol
 function getName (symbol) {
     return new Promise((resolve, reject) => {
         finnhubClient.symbolSearch(symbol, (error, data, response) => {
@@ -46,6 +47,19 @@ function getName (symbol) {
             } catch (error) {
                 return reject(error);
             }
+        });
+    });
+}
+
+const dateToNewsDate = date => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+function getNews (symbol) {
+    return new Promise((resolve, reject) => {
+        finnhubClient.companyNews(symbol, dateToNewsDate(new Date(prevDate)), dateToNewsDate(new Date(nowDate)), (error, data, response) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(data.slice(0, 10));
         });
     });
 }
@@ -74,9 +88,10 @@ exports.updateStockData = async (req, res) => {
     try {
         const stockData = await getCandleData(req.query.stock, true);
         const companyName = await getName(req.query.stock);
-        const processed = processCandle(stockData);
-        await db.collection('stocks').doc(req.query.stock).set({ day_candles: processed, name: companyName }, { merge: true });
-        res.status(200).json({ result: processed });
+        const newsData = await getNews(req.query.stock);
+        const processedData = processCandle(stockData);
+        await db.collection('stocks').doc(req.query.stock).set({ day_candles: processedData, name: companyName, news: JSON.parse(JSON.stringify(newsData)) }, { merge: true });
+        res.status(200).json({ result: `Successfully updated Firestore Database for Stock ${req.query.stock}` });
     } catch (error) {
         res.status(500).json({ result: 'updateStockData internal server error.' });
         console.error(error);
@@ -88,9 +103,10 @@ exports.updateCryptoData = async (req, res) => {
     try {
         const cryptoData = await getCandleData(req.query.crypto, false);
         const cryptoName = await getName(req.query.crypto);
-        const processed = processCandle(cryptoData);
-        await db.collection('crypto').doc(req.query.crypto).set({ day_candles: processed, name: cryptoName }, { merge: true });
-        res.status(200).json({ result: processed });
+        const newsData = await getNews(req.query.crypto);
+        const processedData = processCandle(cryptoData);
+        await db.collection('crypto').doc(req.query.crypto).set({ day_candles: processedData, name: cryptoName, news: newsData }, { merge: true });
+        res.status(200).json({ result: `Successfully updated Firestore Database for Crypto ${req.query.crypto}` });
     } catch (error) {
         res.status(500).json({ result: 'updateCryptoData internal server error.' });
         console.error(error);
