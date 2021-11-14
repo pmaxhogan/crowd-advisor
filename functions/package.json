@@ -14,8 +14,12 @@
   },
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "finnhub": "^1.2.7",
     "firebase-admin": "^9.8.0",
-    "firebase-functions": "^3.14.1"
+    "firebase-functions": "^3.14.1",
+    "sentiment": "^5.0.2",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "eslint": "^7.6.0",
