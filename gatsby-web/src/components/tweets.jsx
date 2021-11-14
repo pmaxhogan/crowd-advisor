@@ -10,7 +10,10 @@ export default function Tweets(props) {
     <Row>
       <Col>
           <Masonry
-              breakpointCols={2}
+              breakpointCols={{
+                default: 2,
+                1000: 1
+              }}
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column">
               {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet &&
