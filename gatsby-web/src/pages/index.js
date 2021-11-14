@@ -4,9 +4,9 @@ import firebase from "gatsby-plugin-firebase";
 import {Col, Container, Nav, Row, Tab, Tabs} from "react-bootstrap";
 import StockTable from "../components/stocktable";
 import StockChart from "../components/stockchart";
-import "../styles/index.css";
 import Tweets from "../components/tweets";
 import News from "../components/news";
+import TweetChart from "../components/tweetchart";
 
 // markup
 class IndexPage extends React.Component {
@@ -62,18 +62,20 @@ class IndexPage extends React.Component {
                         <Col>
                             {
                             (!this.state.selectedRow)
-                                ? <h1>Please select a stock ticker.</h1>
+                                ? <h1>Please select a stock symbol</h1>
                                 : <>
-                                <StockChart stock={this.state.selectedRow}/>
+                                    <StockChart stock={this.state.selectedRow}/>
 
-                            <Tabs fill variant="tabs" defaultActiveKey="tweets">
-                                <Tab eventKey="tweets" title="Tweets">
-                                    {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
-                                </Tab>
-                                <Tab eventKey="news" title="News">
-                                    {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
-                                </Tab>
-                            </Tabs>
+                                    <TweetChart stock={this.state.selectedRow}/>
+
+                                    <Tabs fill variant="tabs" defaultActiveKey="tweets">
+                                        <Tab eventKey="tweets" title="Tweets">
+                                            {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
+                                        </Tab>
+                                        <Tab eventKey="news" title="News">
+                                            {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
+                                        </Tab>
+                                    </Tabs>
                                 </>
                             }
 

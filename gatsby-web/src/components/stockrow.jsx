@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Row, Button } from "react-bootstrap"
-import "../styles/stockrow.css"
 
 const percentChangeStyle = {
   color: "limegreen",

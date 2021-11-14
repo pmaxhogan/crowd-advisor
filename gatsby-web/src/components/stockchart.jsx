@@ -2,6 +2,12 @@ import * as React from "react"
 import { Row, Col, Container } from "react-bootstrap"
 import Chart from "./chart"
 
+const noScroll = {
+  margin: 0,
+  height: "100%",
+  overflowY: "hidden"
+}
+
 export default function StockChart(props) {
     const { stock } = props;
 
@@ -10,7 +16,7 @@ export default function StockChart(props) {
             <Col>
                 <h1>{stock.name}</h1>
                 <h3>${stock.ticker}</h3>
-                <Container>
+                <Container style={noScroll}>
                     {<Chart data={stock.day_candles} key={Math.random()} />}
                 </Container>
 
