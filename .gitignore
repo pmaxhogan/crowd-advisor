@@ -106,3 +106,4 @@ dist
 # custom
 .runtimeconfig.json
 .firebase
+/public/

@@ -11,7 +11,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "deploy": "gatsby build && rm -r ../public/* && cp -r public/ ../ && cd ../public && firebase deploy --only hosting"
   },
   "dependencies": {
     "body-scroll-lock": "^4.0.0-beta.0",

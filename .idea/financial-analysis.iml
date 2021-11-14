@@ -5,6 +5,11 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/gatsby-web/.cache" />
+      <excludeFolder url="file://$MODULE_DIR$/gatsby-web/public" />
+      <excludeFolder url="file://$MODULE_DIR$/public/404" />
+      <excludeFolder url="file://$MODULE_DIR$/public/page-data" />
+      <excludeFolder url="file://$MODULE_DIR$/public/static" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
