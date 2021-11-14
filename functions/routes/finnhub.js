@@ -86,12 +86,13 @@ function processCandle (data) {
 // get stock data and update the database
 exports.updateStockData = async (req, res) => {
     try {
-        const stockData = await getCandleData(req.query.stock, true);
-        const companyName = await getName(req.query.stock);
-        const newsData = await getNews(req.query.stock);
+        const symbol = req.query.symbol;
+        const stockData = await getCandleData(symbol, true);
+        const companyName = await getName(symbol);
+        const newsData = await getNews(symbol);
         const processedData = processCandle(stockData);
-        await db.collection('stocks').doc(req.query.stock).set({ day_candles: processedData, name: companyName, news: JSON.parse(JSON.stringify(newsData)) }, { merge: true });
-        res.status(200).json({ result: `Successfully updated Firestore Database for Stock ${req.query.stock}` });
+        await db.collection('stocks').doc(symbol).set({ day_candles: processedData, name: companyName, news: JSON.parse(JSON.stringify(newsData)) }, { merge: true });
+        res.status(200).json({ result: `Successfully updated Firestore Database for Stock ${symbol}` });
     } catch (error) {
         res.status(500).json({ result: 'updateStockData internal server error.' });
         console.error(error);
@@ -101,12 +102,13 @@ exports.updateStockData = async (req, res) => {
 // get crypto data and update the database
 exports.updateCryptoData = async (req, res) => {
     try {
-        const cryptoData = await getCandleData(req.query.crypto, false);
-        const cryptoName = await getName(req.query.crypto);
-        const newsData = await getNews(req.query.crypto);
+        const symbol = req.query.symbol;
+        const cryptoData = await getCandleData(symbol, false);
+        const cryptoName = await getName(symbol);
+        const newsData = await getNews(symbol);
         const processedData = processCandle(cryptoData);
-        await db.collection('crypto').doc(req.query.crypto).set({ day_candles: processedData, name: cryptoName, news: newsData }, { merge: true });
-        res.status(200).json({ result: `Successfully updated Firestore Database for Crypto ${req.query.crypto}` });
+        await db.collection('crypto').doc(symbol).set({ day_candles: processedData, name: cryptoName, news: newsData }, { merge: true });
+        res.status(200).json({ result: `Successfully updated Firestore Database for Crypto ${symbol}` });
     } catch (error) {
         res.status(500).json({ result: 'updateCryptoData internal server error.' });
         console.error(error);
