@@ -83,6 +83,9 @@ class IndexPage extends React.Component {
 
     async search(string){
         console.log(`Searching ${string}`);
+        if(string.startsWith("$")){
+            string = string.slice(1);
+        }
         this.setState({searchStr: string, searchResults: null});
 
         const req = await fetch(`https://us-central1-financial-analyzer.cloudfunctions.net/searchPhrase?phrase=${string}`);
