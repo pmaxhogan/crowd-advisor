@@ -43,16 +43,18 @@ export default function StockRow(props) {
         onClick={handleClick}
         style={stockRowStyle} 
         variant={"outline-dark"} 
-        size="lg"
+        size="md"
         value={stock}
       >
+        <b>
         <label style={tickerStyle}>
-          $<b>{stock.ticker}</b>
+          ${stock.ticker}
         </label>
 
         <label style={dailyPercentChange >= 0 ? positivePercentChangeStyle : negativePercentChangeStyle}>
           {dailyPercentChange >= 0 ? "+" : ""}{dailyPercentChange}%
         </label>
+        </b>
         
       </Button>
     </Row>
