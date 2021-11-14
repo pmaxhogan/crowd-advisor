@@ -1,7 +1,7 @@
 import * as React from "react";
 import NavbarComponent from "../components/navbar";
 import firebase from "gatsby-plugin-firebase";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Nav, Row, Tab, Tabs} from "react-bootstrap";
 import StockTable from "../components/stocktable";
 import StockChart from "../components/stockchart";
 import "../styles/index.css";
@@ -63,10 +63,20 @@ class IndexPage extends React.Component {
                             {
                             (!this.state.selectedRow)
                                 ? <h1>Please select a stock ticker.</h1>
-                                : <StockChart stock={this.state.selectedRow}/>
+                                : <>
+                                <StockChart stock={this.state.selectedRow}/>
+
+                            <Tabs fill variant="tabs" defaultActiveKey="tweets">
+                                <Tab eventKey="tweets" title="Tweets">
+                                    {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
+                                </Tab>
+                                <Tab eventKey="news" title="News">
+                                    {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
+                                </Tab>
+                            </Tabs>
+                                </>
                             }
-                            {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
-                            {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
+
                         </Col>
                     </Row>
                 </Container>

@@ -9,8 +9,6 @@ export default function Tweets(props) {
   return (
     <Row>
       <Col>
-          <h3>Tweets</h3>
-
           <Masonry
               breakpointCols={2}
               className="my-masonry-grid"
