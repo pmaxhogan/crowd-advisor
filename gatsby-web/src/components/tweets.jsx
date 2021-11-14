@@ -1,7 +1,8 @@
 import * as React from "react"
 import { Row, Col } from "react-bootstrap"
 import { Tweet } from 'react-twitter-widgets'
-
+import "../styles/masonry.css"
+import Masonry from "react-masonry-css";
 
 export default function Tweets(props) {
 
@@ -9,7 +10,15 @@ export default function Tweets(props) {
     <Row>
       <Col>
           <h3>Tweets</h3>
-          {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet && <Tweet tweetId={tweet.mostPopularTweet}/>)}
+
+          <Masonry
+              breakpointCols={2}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column">
+              {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet &&
+              <Tweet tweetId={tweet.mostPopularTweet}/>
+          )}
+          </Masonry>
       </Col>
     </Row>
 
