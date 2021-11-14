@@ -5,6 +5,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import StockTable from "../components/stocktable";
 import StockChart from "../components/stockchart";
 import "../styles/index.css";
+import Tweets from "../components/tweets";
 
 // markup
 class IndexPage extends React.Component {
@@ -58,7 +59,7 @@ class IndexPage extends React.Component {
                                     ? <h1>Please select a stock ticker.</h1>
                                     : <StockChart stock={this.state.selectedRow}/>
                             }
-                            <Tweets tweets={this.state.selectedRow.tweets}/>
+                            {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
                         </Col>
                     </Row>
                 </Container>
