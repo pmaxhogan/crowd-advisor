@@ -1,8 +1,14 @@
 import * as React from "react"
 import { Row, Button } from "react-bootstrap"
 
-const percentChangeStyle = {
+const positivePercentChangeStyle = {
   color: "limegreen",
+  float: "right",
+  pointerEvents: "none"
+}
+
+const negativePercentChangeStyle = {
+  color: "red",
   float: "right",
   pointerEvents: "none"
 }
@@ -25,6 +31,11 @@ export default function StockRow(props) {
       onClickRow(stock);
     }
   }
+  let yesterdayStockData = stock.day_candles[stock.day_candles.length-2].close;
+  let todayStockData = stock.day_candles[stock.day_candles.length-1].close
+  const dailyPercentChange = ((todayStockData - yesterdayStockData) / yesterdayStockData * 100).toFixed(2);
+  
+  console.log(dailyPercentChange);
 
   return (
     <Row>
@@ -39,7 +50,9 @@ export default function StockRow(props) {
           $<b>{stock.ticker}</b>
         </label>
 
-        <label style={percentChangeStyle}>+5%</label>
+        <label style={dailyPercentChange >= 0 ? positivePercentChangeStyle : negativePercentChangeStyle}>
+          {dailyPercentChange >= 0 ? "+" : ""}{dailyPercentChange}%
+        </label>
         
       </Button>
     </Row>
