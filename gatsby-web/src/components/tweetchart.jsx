@@ -3,7 +3,7 @@ import Chart from "react-google-charts";
 import { Row, Col, Container } from "react-bootstrap";
 
 export default function TweetChart(props) {
-    
+
     console.log(props.stock.daySentiment);
     let sentimentData = [
         ['Date', 'Sentiment'],
@@ -15,7 +15,7 @@ export default function TweetChart(props) {
     return (
         <Row>
             <Col>
-                <h3 style={{textAlign: "center"}}>Analyzed Tweet Sentiment</h3>
+                <h2 style={{textAlign: "center"}}>Analyzed Tweet Sentiment</h2>
                 <Container>
                     <Chart
                         width={'100%'}
