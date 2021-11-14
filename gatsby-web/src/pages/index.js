@@ -45,27 +45,28 @@ class IndexPage extends React.Component {
 
         return (
             <main>
-                <title>Home Page</title>
-                <NavbarComponent />
-                <Container>
-                    <Row>
-                        <Col md={3}>
-                            <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
-                        </Col>
+              <title>Home Page</title>
+              <NavbarComponent />
+              <Container>
+                <Row>
+                    <Col md={3}>
+                      <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
+                    </Col>
+                    <Col>
+                      {
+                        (!this.state.selectedRow)
+                          ? <h1>Please select a stock ticker.</h1>
+                          : <StockChart stock={this.state.selectedRow} />
+                      }
+                      <hr/>
+                      <Row>
                         <Col>
-                          {
-                            (!this.state.selectedRow)
-                              ? <h1>Please select a stock ticker.</h1>
-                              : <StockChart stock={this.state.selectedRow} />
-                          }
-                          <Row>
-                            <Col>
-                              <h3>Twitter</h3>
-                            </Col>
-                          </Row>
+                          <h3>Twitter</h3>
                         </Col>
-                    </Row>
-                </Container>
+                      </Row>
+                    </Col>
+                </Row>
+              </Container>
             </main>
         );
     }
