@@ -14,7 +14,7 @@ export default function StockChart(props) {
     return (
         <Row>
             <Col>
-                <h1>${stock.ticker} - {stock.name}</h1>
+                <h2>History</h2>
                 <Container style={noScroll}>
                     {<Chart data={stock.day_candles} key={Math.random()} />}
                 </Container>
