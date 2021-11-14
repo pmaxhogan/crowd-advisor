@@ -9,7 +9,13 @@ export default function Tweets(props) {
     <Row>
       <Col>
           <h3>Tweets</h3>
-          {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet && <Tweet tweetId={tweet.mostPopularTweet}/>)}
+          <Row>
+          {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet &&
+              <Col md={6}>
+              <Tweet tweetId={tweet.mostPopularTweet}/>
+              </Col>
+          )}
+          </Row>
       </Col>
     </Row>
 
