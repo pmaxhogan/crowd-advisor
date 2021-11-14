@@ -1,6 +1,8 @@
 import React from "react";
 import Chart from "react-google-charts";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Image } from "react-bootstrap";
+import happyEmoji from "../images/happyEmoji.png"
+import sadEmoji from "../images/sadEmoji.png"
 
 export default function TweetChart(props) {
 
@@ -13,24 +15,30 @@ export default function TweetChart(props) {
     })
 
     return (
-        <Row>
+        <Row style={{marginTop: "50px"}, {marginBottom: "50px"}}>
+            <Col md={1}>
+                <Row>
+                    <Image src={happyEmoji} rounded />
+                </Row>
+                <Row>
+                    <Image src={sadEmoji} rounded/>
+                </Row>
+            </Col>
             <Col>
-                <h2 style={{textAlign: "center"}}>Analyzed Tweet Sentiment</h2>
+                <h3 style={{textAlign: "center"}}><u>Analyzed Tweet Sentiment</u></h3>
                 <Container>
                     <Chart
                         width={'100%'}
-                        height={'500px'}
+                        height={'200px'}
                         chartType="ColumnChart"
                         loader={<div>Loading Chart</div>}
                         data={sentimentData}
                         options={{
-                        // title: 'Population of Largest U.S. Cities',
                         chartArea: { width: '70%' },
                         hAxis: {
                             title: 'Date'
                         },
                         vAxis: {
-                            title: 'Tweet Sentiment',
                             maxValue: 1,
                             minValue: -1
                         },
