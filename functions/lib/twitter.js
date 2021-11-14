@@ -22,6 +22,31 @@ const daysAgoToDateRange = daysAgo => {
     return [dateToTwitterDate(startRange), dateToTwitterDate(endRange)];
 };
 
+const getMostPopularTweets = (ticker) => new Promise((resolve, reject) => {
+    const [since] = daysAgoToDateRange(7);
+    const params = {q: `${ticker} since:${since}`, result_type: "popular"};
+
+    client.get('search/tweets', params, function(error, tweets, response) {
+        if (error) {
+            return reject(error);
+        } else {
+            // const mostPopularTweets = tweets.statuses && tweets.statuses.sort((a, b) => b.favorite_count - a.favorite_count);
+            //
+            // const mostPopularTweet = mostPopularTweets && mostPopularTweets[0];
+            //
+            // return mostPopularTweet && mostPopularTweet.id_str;
+
+            const popular = tweets.statuses && tweets.statuses.map(tweet => tweet.id_str);
+
+            if(popular.length > 3){
+                return popular;
+            }else{
+                return null;
+            }
+        }
+    });
+});
+
 const getSentimentForDay = (ticker, daysAgo) => new Promise((resolve, reject) => {
     const [since, until] = daysAgoToDateRange(daysAgo);
     const params = {q: `${ticker} until:${until} since:${since}`, result_type: "recent"};
@@ -52,6 +77,8 @@ const getSentimentForDay = (ticker, daysAgo) => new Promise((resolve, reject) =>
 const getSentimentAndTweetHistory = async ticker => {
     let daySentiment = [];
     let tweets = [];
+
+    const mostPopularTweets = await getMostPopularTweets(ticker);
     for(let day = 7; day >= 1; day--){
         const date = new Date();
 
@@ -69,7 +96,7 @@ const getSentimentAndTweetHistory = async ticker => {
         });
     }
 
-    return {daySentiment, tweets};
+    return {daySentiment, tweets, mostPopularTweets};
 };
 
 exports.getSentimentAndTweetHistory = getSentimentAndTweetHistory;
