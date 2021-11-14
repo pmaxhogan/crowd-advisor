@@ -34,28 +34,28 @@ export default function StockRow(props) {
   let yesterdayStockData = stock.day_candles[stock.day_candles.length-2].close;
   let todayStockData = stock.day_candles[stock.day_candles.length-1].close
   const dailyPercentChange = ((todayStockData - yesterdayStockData) / yesterdayStockData * 100).toFixed(2);
-  
+
   console.log(dailyPercentChange);
 
   return (
     <Row>
-      <Button 
+      <Button
         onClick={handleClick}
-        style={stockRowStyle} 
-        variant={"outline-dark"} 
+        style={stockRowStyle}
+        variant={"outline-dark"}
         size="md"
         value={stock}
       >
         <b>
         <label style={tickerStyle}>
-          ${stock.ticker}
+          ${stock.searchName || stock.ticker}
         </label>
 
         <label style={dailyPercentChange >= 0 ? positivePercentChangeStyle : negativePercentChangeStyle}>
           {dailyPercentChange >= 0 ? "+" : ""}{dailyPercentChange}%
         </label>
         </b>
-        
+
       </Button>
     </Row>
 

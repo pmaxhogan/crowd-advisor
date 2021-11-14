@@ -45,13 +45,27 @@ class IndexPage extends React.Component {
             });
         });
 
-        return {stocks};
+        const cryptoResults = await firestore.collection("crypto").get();
+
+        let cryptos = cryptoResults.docs.map(doc => ({
+            ticker: doc.id,
+            ...doc.data()
+        }));
+
+        cryptos.forEach(crypto => {
+            crypto.day_candles.map( obj => {
+              obj.date = obj.day.toDate();
+              return obj;
+            });
+        });
+
+        return {stocks, cryptos};
     }
 
     async componentDidMount() {
-        const {stocks} = await this.getData();
+        const {stocks, cryptos} = await this.getData();
 
-        this.setState({stocks});
+        this.setState({stocks, cryptos});
     }
 
     async pickStock(stock){
@@ -101,7 +115,6 @@ class IndexPage extends React.Component {
     }
 
     render() {
-
         return (
             <main>
                 <title>Home Page</title>
@@ -110,7 +123,10 @@ class IndexPage extends React.Component {
                 <Container>
                     <Row>
                         <Col md={2}>
-                            <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
+                            <StockTable name="Stocks" onClickRow={this.onClickRow} stocks={this.state.stocks}/>
+                        </Col>
+                        <Col md={2}>
+                            <StockTable name="Cryptos" onClickRow={this.onClickRow} stocks={this.state.cryptos}/>
                         </Col>
                         <Col>
                             {

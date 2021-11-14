@@ -41,7 +41,9 @@ function getName (symbol) {
                 return reject(error);
             }
             try {
-                const name = data.result.filter(data => data.symbol === symbol)[0].description;
+                let filtered = data.result.filter(data => data.symbol === symbol);
+                filtered = filtered.length ? filtered : data.result;
+                const name = filtered[0].description;
                 resolve(name);
             } catch (error) {
                 return reject(error);
