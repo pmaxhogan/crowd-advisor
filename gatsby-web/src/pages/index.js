@@ -4,6 +4,7 @@ import firebase from "gatsby-plugin-firebase";
 import { Col, Row, Container } from "react-bootstrap";
 import StockTable from "../components/stocktable";
 import StockChart from "../components/stockchart";
+import "../styles/index.css"
 
 // markup
 class IndexPage extends React.Component {
@@ -34,9 +35,9 @@ class IndexPage extends React.Component {
         this.setState({stocks});
     }
 
-    onClickRow(row) {
-      console.log(row);
-      this.setState({selectedRow: row});
+    onClickRow(stock) {
+      console.log(stock);
+      this.setState({selectedRow: stock});
     }
 
     render () {
@@ -57,6 +58,11 @@ class IndexPage extends React.Component {
                               ? <h1>Please select a stock ticker.</h1>
                               : <StockChart stock={this.state.selectedRow} />
                           }
+                          <Row>
+                            <Col>
+                              <h3>Twitter</h3>
+                            </Col>
+                          </Row>
                         </Col>
                     </Row>
                 </Container>

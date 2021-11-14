@@ -22,7 +22,8 @@ export default function StockRow(props) {
 
   function handleClick(e) {
     if (props.onClickRow) {
-      props.onClickRow(e.target.value);
+      console.log(e.target);
+      props.onClickRow(props.stock);
     }
   }
 
@@ -33,7 +34,7 @@ export default function StockRow(props) {
         style={stockRowStyle} 
         variant={"outline-dark"} 
         size="lg"
-        value={props.stock.ticker}
+        value={props.stock}
       >
         <label style={tickerStyle}>
           $<b>{props.stock.ticker}</b>

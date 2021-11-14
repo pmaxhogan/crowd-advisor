@@ -7,6 +7,7 @@ export default function StockTable(props) {
   return (
     <Container>
       <h1>Stocks</h1>
+      <hr/>
       {props.stocks.map( (stock, index) => {
         return <StockRow onClickRow={props.onClickRow} index={index} stock={stock} key={stock.ticker} />
       })}
