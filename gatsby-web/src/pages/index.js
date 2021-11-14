@@ -23,27 +23,32 @@ class IndexPage extends React.Component {
         const firestore = firebase.firestore();
         const stocksResults = await firestore.collection("stocks").get();
 
-        const stocks = stocksResults.docs.map(stockDoc => ({
+        let stocks = stocksResults.docs.map(stockDoc => ({
             ticker: stockDoc.id,
             ...stockDoc.data()
         }));
+
+        stocks.forEach(stock => {
+            stock.day_candles.map( obj => {
+              obj.date = obj.day.toDate();
+              return obj;
+            });
+        });
 
         return {stocks};
     }
 
     async componentDidMount() {
         const {stocks} = await this.getData();
-
+        
         this.setState({stocks});
     }
 
     onClickRow(stock) {
-        console.log(stock);
         this.setState({selectedRow: stock});
     }
 
     render() {
-        console.log("Rendering stocks", this.state.stocks);
 
         return (
             <main>

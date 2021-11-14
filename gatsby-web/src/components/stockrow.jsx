@@ -19,11 +19,11 @@ const stockRowStyle = {
 }
 
 export default function StockRow(props) {
+  const { stock, onClickRow } = props;
 
   function handleClick(e) {
-    if (props.onClickRow) {
-      console.log(e.target);
-      props.onClickRow(props.stock);
+    if (onClickRow) {
+      onClickRow(stock);
     }
   }
 
@@ -34,10 +34,10 @@ export default function StockRow(props) {
         style={stockRowStyle} 
         variant={"outline-dark"} 
         size="lg"
-        value={props.stock}
+        value={stock}
       >
         <label style={tickerStyle}>
-          $<b>{props.stock.ticker}</b>
+          $<b>{stock.ticker}</b>
         </label>
 
         <label style={percentChangeStyle}>+5%</label>

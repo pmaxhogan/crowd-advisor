@@ -28,6 +28,7 @@ export default function News(props) {
                   )}
               </Masonry>
       </Col>
+      <hr/>
     </Row>
 
   )

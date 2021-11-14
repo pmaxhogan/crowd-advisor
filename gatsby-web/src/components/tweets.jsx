@@ -20,6 +20,7 @@ export default function Tweets(props) {
           )}
           </Masonry>
       </Col>
+      <hr/>
     </Row>
 
   )
