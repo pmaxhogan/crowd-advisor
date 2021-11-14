@@ -35,7 +35,7 @@ class NavbarComponent extends React.Component {
                 className="d-inline-block align-top"
                 alt="Logo"
             />
-            <Navbar.Brand onClick={this.goBack}>FinAnal</Navbar.Brand>
+            <Navbar.Brand onClick={this.goBack}>CrowdAdvisor</Navbar.Brand>
             <Form className="d-flex" onSubmit={this.handleSubmit}>
               <FormControl
                   type="search"
