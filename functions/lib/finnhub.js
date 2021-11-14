@@ -8,7 +8,7 @@ api_key.apiKey = process.env.FINNHUB_KEY;
 const finnhubClient = new finnhub.DefaultApi();
 
 // date window for data updates
-const prevDate = Date.now() - 50 * 1000 * 3600 * 24;
+const prevDate = Date.now() - 80 * 1000 * 3600 * 24;
 const nowDate = Date.now();
 
 function getCandleData (symbol, isStock) {
