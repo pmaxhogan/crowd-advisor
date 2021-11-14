@@ -1,5 +1,6 @@
 import * as React from "react"
 import {Nav, Navbar, NavDropdown, Container, FormControl, Form, Button} from "react-bootstrap";
+import logo from "../images/logo.png";
 
 
 class NavbarComponent extends React.Component {
@@ -29,11 +30,12 @@ class NavbarComponent extends React.Component {
         <Navbar bg="dark" variant="dark" expand="xxl">
           <Container>
             <img
-                src="/gatsby-web/src/images/logo.png"
+                src={logo}
                 width="30"
                 height="30"
                 className="d-inline-block align-top"
                 alt="Logo"
+                style={{marginRight: "10px"}}
             />
             <Navbar.Brand onClick={this.goBack}>CrowdAdvisor</Navbar.Brand>
             <Form className="d-flex" onSubmit={this.handleSubmit}>
