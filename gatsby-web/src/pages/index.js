@@ -1,15 +1,19 @@
 import * as React from "react";
 import NavbarComponent from "../components/navbar";
 import firebase from "gatsby-plugin-firebase";
-import { Col, Row, Container } from "react-bootstrap"
+import { Col, Row, Container } from "react-bootstrap";
+import StockTable from "../components/stocktable";
+import StockChart from "../components/stockchart";
 
 // markup
 class IndexPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stocks: []
+            stocks: [],
+            selectedRow: undefined
         };
+        this.onClickRow = this.onClickRow.bind(this);
     }
 
     async getData(){
@@ -30,6 +34,11 @@ class IndexPage extends React.Component {
         this.setState({stocks});
     }
 
+    onClickRow(row) {
+      console.log(row);
+      this.setState({selectedRow: row});
+    }
+
     render () {
         console.log("Rendering stocks", this.state.stocks);
 
@@ -39,11 +48,15 @@ class IndexPage extends React.Component {
                 <NavbarComponent />
                 <Container>
                     <Row>
-                        <Col md={4}>
-                            Stocks
+                        <Col md={3}>
+                            <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
                         </Col>
                         <Col>
-                            Charts
+                          {
+                            (!this.state.selectedRow)
+                              ? <h1>Please select a stock ticker.</h1>
+                              : <StockChart stock={this.state.selectedRow} />
+                          }
                         </Col>
                     </Row>
                 </Container>
