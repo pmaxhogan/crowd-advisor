@@ -5,6 +5,7 @@ const db = firebaseAdmin.firestore();
 
 // get stock data and update the database
 exports.updateFinnhubData = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*"); 
     try {
         const isStock = req.query.stock ? true : false;
         const symbol = isStock ? req.query.stock : req.query.crypto;
@@ -22,6 +23,7 @@ exports.updateFinnhubData = async (req, res) => {
 
 // search for stock/crypto and return a list of names and symbols
 exports.searchPhrase = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     try {
         const result = await search(req.query.phrase);
         res.status(200).json({ result: result });
