@@ -8,7 +8,7 @@ api_key.apiKey = process.env.FINNHUB_KEY;
 const finnhubClient = new finnhub.DefaultApi();
 
 // date window for data updates
-const prevDate = Date.now() - 7 * 1000 * 3600 * 24;
+const prevDate = Date.now() - 30 * 1000 * 3600 * 24;
 const nowDate = Date.now();
 
 function getCandleData (symbol, isStock) {
@@ -82,6 +82,26 @@ function processCandle (data) {
     return processed;
 }
 
+function search (phrase) {
+    return new Promise((resolve, reject) => {
+        finnhubClient.symbolSearch(phrase, (error, data, response) => {
+            if (error) {
+                return reject(error);
+            }
+            try {
+                var result = [];
+                data.result.forEach((element, i) => {
+                    result[i] = { name: element.description, symbol: element.displaySymbol }
+                });
+                resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        });
+    });
+}
+
 exports.getCandleData = getCandleData;
 exports.getNews = getNews;
 exports.getName = getName;
+exports.search = search;
