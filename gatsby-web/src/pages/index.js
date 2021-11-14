@@ -51,14 +51,14 @@ class IndexPage extends React.Component {
                 <NavbarComponent/>
                 <Container>
                     <Row>
-                        <Col md={3}>
+                        <Col md={2}>
                             <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
                         </Col>
                         <Col>
                             {
-                                (!this.state.selectedRow)
-                                    ? <h1>Please select a stock ticker.</h1>
-                                    : <StockChart stock={this.state.selectedRow}/>
+                            (!this.state.selectedRow)
+                                ? <h1>Please select a stock ticker.</h1>
+                                : <StockChart stock={this.state.selectedRow}/>
                             }
                             {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
                             {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
