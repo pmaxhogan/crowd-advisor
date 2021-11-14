@@ -1,8 +1,6 @@
 import React from "react";
 import Chart from "react-google-charts";
 import { Row, Col, Container, Image } from "react-bootstrap";
-import happyEmoji from "../images/happyEmoji.png"
-import sadEmoji from "../images/sadEmoji.png"
 
 export default function TweetChart(props) {
 
@@ -16,14 +14,6 @@ export default function TweetChart(props) {
 
     return (
         <Row style={{marginTop: "50px"}, {marginBottom: "50px"}}>
-            <Col md={1}>
-                <Row>
-                    <Image src={happyEmoji} rounded />
-                </Row>
-                <Row>
-                    <Image src={sadEmoji} rounded/>
-                </Row>
-            </Col>
             <Col>
                 <h3 style={{textAlign: "center"}}><u>Analyzed Tweet Sentiment</u></h3>
                 <Container>
