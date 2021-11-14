@@ -5,7 +5,6 @@ import "../styles/masonry.css"
 import Masonry from "react-masonry-css";
 
 export default function Tweets(props) {
-
   return (
     <Row>
       <Col>
@@ -16,9 +15,10 @@ export default function Tweets(props) {
               }}
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column">
-              {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet &&
-              <Tweet key={tweet.mostPopularTweet} tweetId={tweet.mostPopularTweet}/>
-          )}
+              {props.tweets && props.tweets.map(tweet => tweet.mostPopularTweet ?
+              <Tweet key={tweet.mostPopularTweet} tweetId={tweet.mostPopularTweet}/> :
+                  (typeof tweet === "string" ? <Tweet key={tweet} tweetId={tweet}/> : undefined)
+              )}
           </Masonry>
       </Col>
       <hr/>

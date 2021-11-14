@@ -39,9 +39,9 @@ const getMostPopularTweets = (ticker) => new Promise((resolve, reject) => {
             const popular = tweets.statuses && tweets.statuses.map(tweet => tweet.id_str);
 
             if(popular.length > 3){
-                return popular;
+                resolve(popular);
             }else{
-                return null;
+                resolve(null);
             }
         }
     });
@@ -95,6 +95,8 @@ const getSentimentAndTweetHistory = async ticker => {
             mostPopularTweet
         });
     }
+
+    // console.log("mostPopularTweets", mostPopularTweets);
 
     return {daySentiment, tweets, mostPopularTweets};
 };

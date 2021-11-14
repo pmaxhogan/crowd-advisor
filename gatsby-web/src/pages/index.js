@@ -134,9 +134,17 @@ class IndexPage extends React.Component {
                                     <TweetChart stock={this.state.selectedRow}/>
 
                                     <Tabs fill variant="tabs" defaultActiveKey="tweets">
-                                        <Tab eventKey="tweets" title="Tweets">
+                                        <Tab eventKey="tweets" title="Recent Tweets">
                                             {this.state.selectedRow && <Tweets tweets={this.state.selectedRow.tweets}/>}
                                         </Tab>
+
+
+                                        {this.state.selectedRow && this.state.selectedRow.mostPopularTweets &&
+                                        <Tab eventKey="popular-tweets" title="Popular Tweets">
+                                            <Tweets tweets={this.state.selectedRow.mostPopularTweets}/>
+                                        </Tab>
+                                        }
+
                                         <Tab eventKey="news" title="News">
                                             {this.state.selectedRow && <News news={this.state.selectedRow.news}/>}
                                         </Tab>

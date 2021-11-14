@@ -12,6 +12,7 @@ exports.getSentimentAndTweetHistory = async (req, res) => {
         const symbol = isStock ? req.query.stock : req.query.crypto;
         const query = isStock ? symbol : (await db.collection(collectionName).doc(req.query.crypto).get()).data().searchName;
         const { daySentiment, tweets, mostPopularTweets } = await getSentimentAndTweetHistory(`$${query}`);
+        // console.log(`Most popular tweets`, mostPopularTweets);
         await db.collection(collectionName).doc(symbol).set({ daySentiment: daySentiment, tweets: tweets, mostPopularTweets }, { merge: true });
         res.status(200).json({ result: `Successfully updated Firestore Database for ${symbol}` });
     } catch (error) {
