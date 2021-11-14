@@ -5,6 +5,7 @@ const db = firebaseAdmin.firestore();
 
 // update twitter and sentiment data
 exports.getSentimentAndTweetHistory = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*"); 
     try {
         const isStock = req.query.stock ? true : false;
         const collectionName = isStock ? 'stocks' : 'crypto';

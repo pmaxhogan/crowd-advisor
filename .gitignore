@@ -105,3 +105,4 @@ dist
 
 # custom
 .runtimeconfig.json
+.firebase
