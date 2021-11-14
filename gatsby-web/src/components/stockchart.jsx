@@ -20,7 +20,6 @@ export default function StockChart(props) {
                 </Container>
 
             </Col>
-            <hr/>
         </Row>
 
     )

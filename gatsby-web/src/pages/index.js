@@ -126,10 +126,8 @@ class IndexPage extends React.Component {
                             ((!this.state.selectedRow)
                                 ? <h3>Please select a stock ticker.</h3>
                                 : <>
-                                    <StockSummary stock={this.state.selectedRow}/>
-
                                     <StockChart stock={this.state.selectedRow}/>
-
+                                    
                                     <TweetChart stock={this.state.selectedRow}/>
 
                                     <Tabs fill variant="tabs" defaultActiveKey="tweets">
