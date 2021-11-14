@@ -40,7 +40,7 @@ class IndexPage extends React.Component {
 
     async componentDidMount() {
         const {stocks} = await this.getData();
-        
+
         this.setState({stocks});
     }
 
