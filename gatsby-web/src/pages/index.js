@@ -10,6 +10,7 @@ import SearchResults from "../components/SearchResults";
 import Loading from "../components/loading";
 import TweetChart from "../components/tweetchart";
 import StockSummary from "../components/stocksummary";
+import "../styles/styles.css";
 
 // markup
 class IndexPage extends React.Component {
@@ -126,8 +127,10 @@ class IndexPage extends React.Component {
                             ((!this.state.selectedRow)
                                 ? <h3>Please select a stock ticker.</h3>
                                 : <>
+                                    <StockSummary stock={this.state.selectedRow}/>
+
                                     <StockChart stock={this.state.selectedRow}/>
-                                    
+
                                     <TweetChart stock={this.state.selectedRow}/>
 
                                     <Tabs fill variant="tabs" defaultActiveKey="tweets">

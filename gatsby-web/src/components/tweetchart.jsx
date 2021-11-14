@@ -15,7 +15,7 @@ export default function TweetChart(props) {
     return (
         <Row style={{marginTop: "50px", marginBottom: "50px"}}>
             <Col>
-                <h3 style={{textAlign: "center"}}><u>Analyzed Tweet Sentiment</u></h3>
+                <h3 style={{textAlign: "center"}}>Analyzed Tweet Sentiment</h3>
                 <Container>
                     <Chart
                         width={'100%'}
