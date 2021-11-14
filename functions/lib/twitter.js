@@ -24,11 +24,12 @@ const daysAgoToDateRange = daysAgo => {
 
 const getSentimentForDay = (ticker, daysAgo) => new Promise((resolve, reject) => {
     const [since, until] = daysAgoToDateRange(daysAgo);
-    const params = {q: `${ticker} until:${until} since:${since}`, result_type: "popular"};
+    const params = {q: `${ticker} until:${until} since:${since}`, result_type: "recent"};
     client.get('search/tweets', params, function(error, tweets, response) {
         if (error) {
             return reject(error);
         }else{
+            // console.log(params.q, "=>", tweets.statuses.length);
             tweets.statuses.map(tweet => {
                 if(tweet.text) tweet.sentiment = sentiment.analyze(tweet.text);
                 return tweet;
@@ -72,3 +73,5 @@ const getSentimentAndTweetHistory = async ticker => {
 };
 
 exports.getSentimentAndTweetHistory = getSentimentAndTweetHistory;
+
+// getSentimentAndTweetHistory("$GLD").then(console.log);
