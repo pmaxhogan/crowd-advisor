@@ -2,7 +2,6 @@ const { firebaseAdmin } = require('../firebase');
 const functions = require("firebase-functions");
 const dotenv = require('dotenv');
 const finnhub = require('finnhub');
-const { object } = require('firebase-functions/v1/storage');
 
 dotenv.config();
 
@@ -11,27 +10,43 @@ const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = process.env.FINNHUB_KEY;
 const finnhubClient = new finnhub.DefaultApi();
 
-function getCandleData (name, isStock) {
+function getCandleData (symbol, isStock) {
     // data for past 7 days
     const prevDate = Math.floor((Date.now() - (7 * 1000 * 3600 * 24)) / 1000);
     const nowDate = Math.floor(Date.now() / 1000);
 
     return new Promise((resolve, reject) => {
         if (isStock) {
-            finnhubClient.stockCandles(name, 'D', prevDate, nowDate, (error, data, response) => {
+            finnhubClient.stockCandles(symbol, 'D', prevDate, nowDate, (error, data, response) => {
                 if (error) {
                     return reject(error);
                 }
                 resolve(data);
             });
         } else {
-            finnhubClient.cryptoCandles(name, 'D', prevDate, nowDate, (error, data, response) => {
+            finnhubClient.cryptoCandles(symbol, 'D', prevDate, nowDate, (error, data, response) => {
                 if (error) {
                     return reject(error);
                 }
                 resolve(data);
             });
         }
+    });
+}
+
+function getName (symbol) {
+    return new Promise((resolve, reject) => {
+        finnhubClient.symbolSearch(symbol, (error, data, response) => {
+            if (error) {
+                return reject(error);
+            }
+            try {
+                const name = data.result.filter(data => data.symbol === symbol)[0].description;
+                resolve(name);
+            } catch (error) {
+                return reject(error);
+            }
+        });
     });
 }
 
@@ -58,8 +73,9 @@ function processCandle (data) {
 exports.updateStockData = async (req, res) => {
     try {
         const stockData = await getCandleData(req.query.stock, true);
+        const companyName = await getName(req.query.stock);
         const processed = processCandle(stockData);
-        await db.collection('stocks').doc(req.query.stock).set({ day_candles: processed }, { merge: true });
+        await db.collection('stocks').doc(req.query.stock).set({ day_candles: processed, name: companyName }, { merge: true });
         res.status(200).json({ result: processed });
     } catch (error) {
         res.status(500).json({ result: 'updateStockData internal server error.' });
@@ -71,8 +87,9 @@ exports.updateStockData = async (req, res) => {
 exports.updateCryptoData = async (req, res) => {
     try {
         const cryptoData = await getCandleData(req.query.crypto, false);
+        const cryptoName = await getName(req.query.crypto);
         const processed = processCandle(cryptoData);
-        await db.collection('crypto').doc(req.query.crypto).set({ day_candles: processed }, { merge: true });
+        await db.collection('crypto').doc(req.query.crypto).set({ day_candles: processed, name: cryptoName }, { merge: true });
         res.status(200).json({ result: processed });
     } catch (error) {
         res.status(500).json({ result: 'updateCryptoData internal server error.' });
