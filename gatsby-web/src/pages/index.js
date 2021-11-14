@@ -1,10 +1,10 @@
 import * as React from "react";
 import NavbarComponent from "../components/navbar";
 import firebase from "gatsby-plugin-firebase";
-import { Col, Row, Container } from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import StockTable from "../components/stocktable";
 import StockChart from "../components/stockchart";
-import "../styles/index.css"
+import "../styles/index.css";
 
 // markup
 class IndexPage extends React.Component {
@@ -17,11 +17,11 @@ class IndexPage extends React.Component {
         this.onClickRow = this.onClickRow.bind(this);
     }
 
-    async getData(){
+    async getData() {
         const firestore = firebase.firestore();
         const stocksResults = await firestore.collection("stocks").get();
 
-        const stocks =  stocksResults.docs.map(stockDoc => ({
+        const stocks = stocksResults.docs.map(stockDoc => ({
             ticker: stockDoc.id,
             ...stockDoc.data()
         }));
@@ -36,33 +36,29 @@ class IndexPage extends React.Component {
     }
 
     onClickRow(stock) {
-      console.log(stock);
-      this.setState({selectedRow: stock});
+        console.log(stock);
+        this.setState({selectedRow: stock});
     }
 
-    render () {
+    render() {
         console.log("Rendering stocks", this.state.stocks);
 
         return (
             <main>
                 <title>Home Page</title>
-                <NavbarComponent />
+                <NavbarComponent/>
                 <Container>
                     <Row>
                         <Col md={3}>
                             <StockTable onClickRow={this.onClickRow} stocks={this.state.stocks}/>
                         </Col>
                         <Col>
-                          {
-                            (!this.state.selectedRow)
-                              ? <h1>Please select a stock ticker.</h1>
-                              : <StockChart stock={this.state.selectedRow} />
-                          }
-                          <Row>
-                            <Col>
-                              <h3>Twitter</h3>
-                            </Col>
-                          </Row>
+                            {
+                                (!this.state.selectedRow)
+                                    ? <h1>Please select a stock ticker.</h1>
+                                    : <StockChart stock={this.state.selectedRow}/>
+                            }
+                            <Tweets tweets={this.state.selectedRow.tweets}/>
                         </Col>
                     </Row>
                 </Container>
@@ -71,4 +67,4 @@ class IndexPage extends React.Component {
     }
 };
 
-export default IndexPage
+export default IndexPage;
