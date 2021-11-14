@@ -30,7 +30,6 @@ export function saveInteractiveNodes(type, chartId) {
 		if (isDefined(node) || isDefined(this.interactiveNodes[key])) {
 			// console.error(node, key)
 			// console.log(this.interactiveNodes)
-			// eslint-disable-next-line fp/no-mutation
 			this.interactiveNodes = {
 				...this.interactiveNodes,
 				[key]: { type, chartId, node },
